@@ -105,6 +105,10 @@
             font-size: 0.85rem;
             font-weight: 600;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: opacity 0.2s;
+        }
+        .legend-badge:hover {
+            opacity: 0.8;
         }
         .legend-badge.korea {
             background-color: #ecfdf5;
@@ -243,12 +247,18 @@
             <h1>SCHEDULE</h1>
             <p>경기일정 📅</p>
             
-            <!-- 🎨 범례 순서 변경 (신한은행 먼저) -->
+            <!-- 🎨 범례 순서 변경 (클릭 가능한 버튼으로 변신!) -->
             <div class="legend-container">
-                <div class="legend-badge shinhan">
+                <!-- 전체 보기 버튼 추가 -->
+                <div class="legend-badge" onclick="filterSchedule('all')" style="cursor: pointer; background-color: #f8fafc; color: #475569; border: 1px solid #cbd5e1;">
+                    👀 전체 보기
+                </div>
+                <!-- 신한은행 버튼 -->
+                <div class="legend-badge shinhan" onclick="filterSchedule('shinhan')" style="cursor: pointer;">
                     <span class="legend-dot"></span> 신한은행 일정
                 </div>
-                <div class="legend-badge korea">
+                <!-- 국대 버튼 -->
+                <div class="legend-badge korea" onclick="filterSchedule('korea')" style="cursor: pointer;">
                     <span class="legend-dot"></span> 3x3 국가대표 경기
                 </div>
             </div>
@@ -425,10 +435,28 @@
             renderCalendar();
         }
 
+        // 달력을 그리는 명령
         renderCalendar();
+
+        // 💡 버튼을 눌렀을 때 일정을 걸러주는 마법 기능!
+        function filterSchedule(type) {
+            let items = document.querySelectorAll('.event-box'); 
+            
+            items.forEach(function(item) {
+                if (type === 'all') {
+                    item.style.display = 'block'; 
+                } else if (item.classList.contains(type)) {
+                    item.style.display = 'block'; 
+                } else {
+                    item.style.display = 'none';  
+                }
+            });
+        }
     </script>
-<footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 13px; z-index: 10;">
-    © 2026. @heo_11_u All rights reserved.
-</footer>
+
+    <!-- 달력 페이지에 맞춘 예쁜 저작권 푸터 -->
+    <footer style="text-align: center; padding: 30px 0; margin-top: 50px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
+        <p>© 2026. @heo_11_u All rights reserved.</p>
+    </footer>
 </body>
 </html>
