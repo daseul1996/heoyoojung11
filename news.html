@@ -12,7 +12,7 @@
             color: #1e293b;
         }
 
-        /* 상단 메뉴 바 (일정 및 갤러리 페이지와 동일하게 통일) */
+        /* 상단 메뉴 바 */
         .navbar {
             background-color: white;
             border-bottom: 1px solid #e2e8f0;
@@ -55,7 +55,6 @@
             align-items: center;
         }
 
-        /* 📰 뉴스 탭 활성화 */
         .nav-item.active {
             color: #1d4ed8;
             background-color: #eff6ff; 
@@ -66,9 +65,8 @@
             color: #1d4ed8;
         }
 
-        /* 메인 콘텐츠 영역 */
         .main-container {
-            max-width: 1000px; /* 뉴스 목록은 살짝 좁게 모아주는 것이 훨씬 정돈되어 보여요 */
+            max-width: 1000px;
             margin: 0 auto;
             padding: 60px 20px;
         }
@@ -90,19 +88,17 @@
             margin: 0;
         }
 
-        /* 뉴스 목록 레이아웃 */
         .news-list {
             display: flex;
             flex-direction: column;
-            gap: 25px; /* 기사 카드 사이의 여백 */
+            gap: 25px;
         }
 
-        /* 🆕 뉴스 카드 (왼쪽: 사진 / 오른쪽: 텍스트 가로 정렬 설정) */
         .news-card {
-            display: flex; /* 가로 배치 */
+            display: flex;
             background-color: white;
             border: 1px solid #e2e8f0;
-            border-radius: 16px; /* 둥글고 세련된 모서리 */
+            border-radius: 16px;
             overflow: hidden;
             text-decoration: none;
             color: inherit;
@@ -116,11 +112,10 @@
             box-shadow: 0 12px 24px -5px rgba(29, 78, 216, 0.06);
         }
 
-        /* 🆕 기사 대표 썸네일 이미지 영역 */
         .news-thumbnail {
-            width: 240px; /* 사진 가로 크기 고정 */
+            width: 240px;
             min-width: 240px;
-            height: 160px; /* 사진 세로 크기 고정 */
+            height: 160px;
             overflow: hidden;
             background-color: #f1f5f9;
         }
@@ -128,27 +123,25 @@
         .news-thumbnail img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 사진 비율이 깨지지 않고 꽉 차게 채우기 */
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
 
-        /* 마우스를 대면 사진이 살짝 커지는 줌인 효과 */
         .news-card:hover .news-thumbnail img {
             transform: scale(1.05);
         }
 
-        /* 기사 텍스트 컨텐츠 영역 */
         .news-content {
             padding: 24px 30px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* 세로 가운데 정렬 */
-            flex-grow: 1; /* 나머지 빈 곳 다 채우기 */
+            justify-content: center;
+            flex-grow: 1;
         }
 
         .news-date {
             font-size: 0.85rem;
-            color: #1d4ed8; /* 날짜 파란색 포인트 */
+            color: #1d4ed8;
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -159,7 +152,6 @@
             line-height: 1.4;
             color: #0f172a;
             margin: 0 0 12px 0;
-            /* 제목이 너무 길어지면 두 줄 후 말줄임표 처리 */
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -171,14 +163,12 @@
             line-height: 1.6;
             color: #64748b;
             margin: 0;
-            /* 내용이 너무 길어지면 한 줄 후 말줄임표 처리 */
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        /* 모바일이나 창 크기가 작아질 때는 위아래 세로 배치로 자연스럽게 변환 */
         @media (max-width: 640px) {
             .news-card {
                 flex-direction: column;
@@ -195,7 +185,6 @@
 </head>
 <body>
 
-    <!-- 상단 메뉴 바 -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
@@ -213,38 +202,34 @@
             <p>코트 위에서 가장 빛나는 유정이의 소식들 📰</p>
         </header>
 
-        <!-- 💡 구글 시트에서 가져온 뉴스가 이 안으로 쏙쏙 들어갑니다! -->
         <div class="news-list" id="news-container">
             <!-- 자바스크립트가 여기에 기사를 만들어줄 거예요 -->
         </div>
     </div>
 
     <script>
-        // 👇 유정 님이 주신 뉴스 전용 구글 시트 링크가 쏙 들어갔습니다! 👇
         const newsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRu2649eW-69sWreq0p4Xp4S5nor31l2iHcS-pABkTchn5IFoijM9XsNb4W5PW5N2e2LWcaVgDwfSvq/pub?output=csv";
 
-        // 구글 시트에서 뉴스 데이터 가져오기
         async function loadNews() {
             try {
                 const response = await fetch(newsCsvUrl);
                 const data = await response.text();
                 
-                // 첫 줄(제목)은 빼고 데이터 쪼개기
                 const rows = data.split('\n').slice(1);
                 const container = document.getElementById('news-container');
                 container.innerHTML = ""; 
 
                 rows.forEach(row => {
-                    const cols = row.split(',');
-                    // 5칸(날짜, 제목, 내용, 링크, 이미지)이 다 있는지 확인
+                    // 쉼표로 나누되, 따옴표 안에 있는 쉼표는 무시하도록 안전하게 처리
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    
                     if(cols.length >= 5) {
-                        const date = cols[0] ? cols[0].trim() : "";
-                        const title = cols[1] ? cols[1].trim() : "";
-                        const summary = cols[2] ? cols[2].trim() : "";
-                        const link = cols[3] ? cols[3].trim() : "#";
-                        const image = cols[4] ? cols[4].trim() : "NEWS/news1.jpg";
+                        const date = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
+                        const title = cols[1] ? cols[1].trim().replace(/"/g, '') : "";
+                        const summary = cols[2] ? cols[2].trim().replace(/"/g, '') : "";
+                        const link = cols[3] ? cols[3].trim().replace(/"/g, '') : "#";
+                        const image = cols[4] ? cols[4].trim().replace(/"/g, '') : "NEWS/news1.jpg";
 
-                        // 제목이 비어있지 않으면 기사 카드 만들기!
                         if(title) { 
                             const cardHtml = `
                             <a href="${link}" target="_blank" class="news-card">
@@ -258,7 +243,7 @@
                                 </div>
                             </a>
                             `;
-                            container.innerHTML += cardHtml; // 화면에 기사 추가
+                            container.innerHTML += cardHtml; 
                         }
                     }
                 });
@@ -268,11 +253,9 @@
             }
         }
 
-        // 마법 실행!
         loadNews();
     </script>
 
-    <!-- 달력 페이지처럼 하얀 배경에 잘 보이게 수정한 푸터 -->
     <footer style="text-align: center; padding: 30px 0; margin-top: 50px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
         <p>© 2026. @heo_11_u All rights reserved.</p>
     </footer>
