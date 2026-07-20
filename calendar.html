@@ -89,7 +89,7 @@
             margin: 0 0 20px 0;
         }
 
-        /* 🎨 범례 뱃지 스타일 (신한은행이 먼저 오도록 배치) */
+        /* 🎨 범례 뱃지 스타일 */
         .legend-container {
             display: flex;
             justify-content: center;
@@ -247,17 +247,13 @@
             <h1>SCHEDULE</h1>
             <p>경기일정 📅</p>
             
-            <!-- 🎨 범례 순서 변경 (클릭 가능한 버튼으로 변신!) -->
             <div class="legend-container">
-                <!-- 전체 보기 버튼 추가 -->
                 <div class="legend-badge" onclick="filterSchedule('all')" style="cursor: pointer; background-color: #f8fafc; color: #475569; border: 1px solid #cbd5e1;">
                     👀 전체 보기
                 </div>
-                <!-- 신한은행 버튼 -->
                 <div class="legend-badge shinhan" onclick="filterSchedule('shinhan')" style="cursor: pointer;">
                     <span class="legend-dot"></span> 신한은행 일정
                 </div>
-                <!-- 국대 버튼 -->
                 <div class="legend-badge korea" onclick="filterSchedule('korea')" style="cursor: pointer;">
                     <span class="legend-dot"></span> 3x3 국가대표 경기
                 </div>
@@ -284,44 +280,30 @@
     </div>
 
     <script>
-        // 👇 유정 님이 주신 구글 시트 링크가 여기에 들어갔어요! 👇
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiCVieOnEzAz8e_t_U11bvdotDJvrTt6KruXBu1yciaF7hMtiW9H9ag3l-W21ptvdZgcP-97hfI1IS/pub?output=csv";
+        const calendarCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiCVieOnEzAz8e_t_U11bvdotDJvrTt6KruXBu1yciaF7hMtiW9H9ag3l-W21ptvdZgcP-97hfI1IS/pub?output=csv";
 
-        let schedules = {}; // 빈 스케줄 주머니
+        let schedules = {}; 
         let currentDate = new Date();
 
-        // 구글 시트에서 데이터 가져오는 마법!
-        async function loadSchedules() {
-            try {
-                const response = await fetch(csvUrl);
-                const data = await response.text();
-                
-                // 엑셀 내용을 줄바꿈으로 쪼개기 (첫 줄 제목은 빼고)
-                const rows = data.split('\n').slice(1);
-                
-                rows.forEach(row => {
-                    // 내용을 쉼표(,) 기준으로 쪼개기
-                    const cols = row.split(',');
-                    if(cols.length >= 6) {
-                        const date = cols[0].trim();
-                        if(date) { // 날짜가 있으면 주머니에 쏙!
-                            schedules[date] = {
-                                type: cols[1] ? cols[1].trim() : "",
-                                text: cols[2] ? cols[2].trim() : "",
-                                time: cols[3] ? cols[3].trim() : "",
-                                match: cols[4] ? cols[4].trim() : "",
-                                location: cols[5] ? cols[5].trim() : ""
-                            };
-                        }
+        function parseAndStoreSchedules(dataText) {
+            schedules = {};
+            const rows = dataText.split('\n').slice(1);
+            
+            rows.forEach(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if(cols.length >= 6) {
+                    const date = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
+                    if(date) { 
+                        schedules[date] = {
+                            type: cols[1] ? cols[1].trim().replace(/"/g, '') : "",
+                            text: cols[2] ? cols[2].trim().replace(/"/g, '') : "",
+                            time: cols[3] ? cols[3].trim().replace(/"/g, '') : "",
+                            match: cols[4] ? cols[4].trim().replace(/"/g, '') : "",
+                            location: cols[5] ? cols[5].trim().replace(/"/g, '') : ""
+                        };
                     }
-                });
-                
-                // 데이터 다 가져왔으면 달력 그리기!
-                renderCalendar();
-            } catch (error) {
-                console.error("일정을 불러오는 데 실패했습니다.", error);
-                renderCalendar(); // 실패해도 일단 빈 달력은 보여주기
-            }
+                }
+            });
         }
 
         function renderCalendar() {
@@ -360,7 +342,6 @@
                 
                 if (schedules[dateKey]) {
                     let item = schedules[dateKey];
-                    
                     let boxHtml = `<div class="event-box ${item.type}">`;
                     if (item.text) boxHtml += `<div><b>${item.text}</b></div>`;
                     if (item.time) boxHtml += `<div>${item.time}</div>`;
@@ -392,15 +373,39 @@
             }
         }
 
+        async function loadSchedules() {
+            try {
+                // ⚡ 1. 브라우저에 저장된 데이터가 있으면 0.1초 만에 먼저 달력 그림!
+                const cachedData = localStorage.getItem('cachedCalendarData');
+                if (cachedData) {
+                    parseAndStoreSchedules(cachedData);
+                    renderCalendar();
+                }
+
+                // ⚡ 2. 뒤에서 최신 시트 내용을 몰래 가져와서 업데이트
+                const response = await fetch(calendarCsvUrl);
+                const freshData = await response.text();
+                
+                if (freshData && freshData !== cachedData) {
+                    localStorage.setItem('cachedCalendarData', freshData);
+                    parseAndStoreSchedules(freshData);
+                    renderCalendar();
+                } else if (!cachedData) {
+                    renderCalendar();
+                }
+            } catch (error) {
+                console.error("일정을 불러오는 데 실패했습니다.", error);
+                renderCalendar();
+            }
+        }
+
         function changeMonth(direction) {
             currentDate.setMonth(currentDate.getMonth() + direction);
             renderCalendar();
         }
 
-        // 💡 버튼을 눌렀을 때 일정을 걸러주는 마법 기능!
         function filterSchedule(type) {
             let items = document.querySelectorAll('.event-box'); 
-            
             items.forEach(function(item) {
                 if (type === 'all') {
                     item.style.display = 'block'; 
@@ -412,11 +417,9 @@
             });
         }
 
-        // 시작할 때 구글 시트에서 데이터 가져오기 실행!
         loadSchedules();
     </script>
 
-    <!-- 달력 페이지에 맞춘 예쁜 저작권 푸터 -->
     <footer style="text-align: center; padding: 30px 0; margin-top: 50px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
         <p>© 2026. @heo_11_u All rights reserved.</p>
     </footer>
