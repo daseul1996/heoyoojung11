@@ -1,217 +1,243 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>NO.11 HEOYOOJUNG - GALLERY</title>
-<style>
-body {
-font-family: 'Helvetica Neue', Arial, sans-serif;
-background-color: #f8fafc; 
-margin: 0;
-padding: 0;
-color: #1e293b;
-}
+    <meta charset="UTF-8">
+    <title>NO.11 HEOYOOJUNG - GALLERY</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc; 
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
 
-/* 상단 메뉴 바 */
-.navbar {
-background-color: white;
-border-bottom: 1px solid #e2e8f0;
-padding: 15px 30px;
-position: sticky;
-top: 0;
-z-index: 100;
-box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-}
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
 
-.navbar-container {
-max-width: 1200px;
-margin: 0 auto;
-display: flex;
-justify-content: space-between; 
-align-items: center; 
-}
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
 
-.nav-logo {
-font-size: 1.25rem;
-font-weight: bold;
-color: #1d4ed8; 
-text-decoration: none;
-}
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1d4ed8; 
+            text-decoration: none;
+        }
 
-.nav-menu {
-display: flex;
-gap: 15px; 
-}
+        .nav-menu {
+            display: flex;
+            gap: 15px; 
+        }
 
-.nav-item {
-color: #64748b;
-text-decoration: none;
-font-size: 0.95rem;
-font-weight: 500;
-padding: 8px 16px;
-border-radius: 6px;
-transition: all 0.2s ease;
-display: inline-flex;
-align-items: center;
-}
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
 
-/* 📸 사진 탭 활성화 */
-.nav-item.active {
-color: #1d4ed8;
-background-color: #eff6ff; 
-font-weight: bold;
-}
+        .nav-item.active {
+            color: #1d4ed8;
+            background-color: #eff6ff; 
+            font-weight: bold;
+        }
 
-.nav-item:hover {
-color: #1d4ed8;
-}
+        .nav-item:hover {
+            color: #1d4ed8;
+        }
 
-/* 메인 콘텐츠 영역 */
-.main-container {
-max-width: 1200px;
-margin: 0 auto;
-padding: 60px 20px;
-}
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
 
-header {
-text-align: center;
-margin-bottom: 40px;
-}
-header h1 {
-font-size: 2.3rem;
-font-weight: bold;
-letter-spacing: 1px;
-margin-bottom: 10px;
-color: #0f172a;
-}
-header p {
-color: #64748b; 
-font-size: 1.05rem;
-margin: 0;
-}
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        header p {
+            color: #64748b; 
+            font-size: 1.05rem;
+            margin: 0;
+        }
 
-.search-container {
-text-align: center;
-margin-bottom: 40px;
-}
-.search-input {
-width: 100%;
-max-width: 400px;
-padding: 10px 16px;
-font-size: 0.9rem;
-border: 1px solid #cbd5e1;
-border-radius: 20px;
-outline: none;
-transition: border-color 0.2s;
-}
-.search-input:focus {
-border-color: #1d4ed8; 
-}
+        /* 날짜별 폴더 카드 그리드 레이아웃 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
 
-/* 사진 폴더 그리드 설정 */
-.gallery-grid {
-display: grid;
-grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-gap: 25px; 
-}
+        .folder-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+        }
 
-.gallery-item {
-background-color: white;
-border: 1px solid #e2e8f0;
-border-radius: 12px;
-overflow: hidden; 
-transition: transform 0.3s ease, box-shadow 0.3s ease; 
-cursor: pointer;
-box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
-}
+        .folder-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -5px rgba(29, 78, 216, 0.08);
+        }
 
-.gallery-item:hover {
-transform: translateY(-6px);
-box-shadow: 0 12px 20px -3px rgba(29, 78, 216, 0.08); 
-}
+        .folder-thumbnail {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
 
-.gallery-item img {
-width: 100%;
-height: 280px;
-object-fit: cover; 
-display: block;
-}
+        .folder-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
 
-.gallery-text {
-padding: 18px;
-font-size: 0.95rem;
-border-top: 1px solid #f1f5f9;
-text-align: center;
-}
+        .folder-card:hover .folder-thumbnail img {
+            transform: scale(1.05);
+        }
 
-.date-badge {
-display: inline-block;
-background-color: #1d4ed8; 
-color: #fff;
-padding: 3px 9px;
-border-radius: 6px;
-font-size: 0.75rem;
-font-weight: bold;
-margin-bottom: 8px;
-}
-</style>
+        .folder-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .folder-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
-<!-- 상단 메뉴 바 -->
-<nav class="navbar">
-<div class="navbar-container">
-<a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
-<div class="nav-menu">
-<a href="gallery.html" class="nav-item active">📸 사진</a>
-<a href="calendar.html" class="nav-item">📅 일정</a>
-<a href="news.html" class="nav-item">📰 NEWS</a>
-</div>
-</div>
-</nav>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
+            <div class="nav-menu">
+                <a href="gallery.html" class="nav-item active">📸 사진</a>
+                <a href="calendar.html" class="nav-item">📅 일정</a>
+                <a href="news.html" class="nav-item">📰 NEWS</a>
+            </div>
+        </div>
+    </nav>
 
-<div class="main-container">
-<header>
-<h1>GALLERY</h1>
-<p>소중하게 남겨둔 추억 폴더들 📂</p>
-</header>
+    <div class="main-container">
+        <header>
+            <h1>GALLERY</h1>
+            <p>유정이의 소중한 순간들을 모아둔 공간 📸</p>
+        </header>
 
-<div class="gallery-grid">
-<!-- 26.07.18 폴더 카드 (첫 번째 사진 photo1.png로 연결) -->
-<a href="260718.html" style="text-decoration: none; color: inherit;">
-<div class="gallery-item">
-<img src="26.07.18/photo1.png" alt="26.07.18 사진">
-<div class="gallery-text">
-<span class="date-badge">26.07.18</span>
-</div>
-</div>
-</a>
+        <!-- ⚡ 구글 시트에서 날짜별 폴더 목록을 읽어와서 자동으로 띄워줍니다 -->
+        <div class="gallery-grid" id="folder-container">
+            <!-- 자바스크립트가 채워줄 예정 -->
+        </div>
+    </div>
 
-<!-- 26.04.06 폴더 카드 (첫 번째 사진 photo1.png로 연결) -->
-<a href="260406.html" style="text-decoration: none; color: inherit;">
-<div class="gallery-item">
-<img src="26.04.06/photo1.png" alt="26.04.06 사진">
-<div class="gallery-text">
-<span class="date-badge">26.04.06</span>
-</div>
-</div>
-</a>
+    <script>
+        // 👇 유정 님이 주신 통합 갤러리 구글 시트 링크가 쏙 들어갔습니다! 👇
+        const galleryCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxFXkleqA7GG8IOa3iBgrcrPxCTx_IexKTjuDHcnLUIiwSWfsAbFyFnqWRXwJbFVPPm_1Unj2RsuEW/pub?output=csv";
 
-<!-- 26.04.01 폴더 카드 -->
-<a href="260401.html" style="text-decoration: none; color: inherit;">
-<div class="gallery-item">
-<img src="26.04.01/photo16.png" alt="26.04.01 사진">
-<div class="gallery-text">
-<span class="date-badge">26.04.01</span>
-</div>
-</div>
-</a>
+        async function loadGalleryFolders() {
+            try {
+                // ⚡ 속도 최적화: 브라우저 캐시 먼저 0.1초 만에 띄우기
+                const cachedData = localStorage.getItem('cachedGalleryMainData');
+                if (cachedData) {
+                    parseAndRenderFolders(cachedData);
+                }
 
-</div>
-</div>
+                const response = await fetch(galleryCsvUrl);
+                const freshData = await response.text();
+                
+                if (freshData && freshData !== cachedData) {
+                    localStorage.setItem('cachedGalleryMainData', freshData);
+                    parseAndRenderFolders(freshData);
+                } else if (!cachedData) {
+                    parseAndRenderFolders(freshData);
+                }
+            } catch (error) {
+                console.error("갤러리를 불러오는 데 실패했습니다.", error);
+            }
+        }
 
-<footer style="position: fixed; bottom: 10px; width: 100%; text-align: center; color: rgba(255,255,255,0.7); font-size: 13px; z-index: 10;">
-    © 2026. @heo_11_u All rights reserved.
-</footer>
+        function parseAndRenderFolders(dataText) {
+            const rows = dataText.split('\n').slice(1);
+            const folders = {}; // 날짜별로 사진들을 모아둘 주머니
+
+            rows.forEach(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if(cols.length >= 2) {
+                    const folderDate = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
+                    const fileName = cols[1] ? cols[1].trim().replace(/"/g, '') : "";
+
+                    if(folderDate && fileName) {
+                        if(!folders[folderDate]) {
+                            // 각 폴더의 첫 번째 사진을 대표 썸네일로 지정 (확장자가 안 적혀있을 수 있으니 기본 png나 jpg 대응)
+                            folders[folderDate] = {
+                                firstImg: `${folderDate}/${fileName}.png` 
+                            };
+                        }
+                    }
+                }
+            });
+
+            const container = document.getElementById('folder-container');
+            container.innerHTML = "";
+
+            // 날짜별로 카드 만들기
+            for (const [date, info] of Object.entries(folders)) {
+                const folderHtml = `
+                <a href="view.html?date=${date}" class="folder-card">
+                    <div class="folder-thumbnail">
+                        <img src="${info.firstImg}" alt="${date} 갤러리" loading="lazy" onerror="this.src='${date}/${date.replace(/\./g, '')}.jpg'">
+                    </div>
+                    <div class="folder-info">
+                        <h2 class="folder-title">📁 ${date}</h2>
+                    </div>
+                </a>
+                `;
+                container.innerHTML += folderHtml;
+            }
+        }
+
+        loadGalleryFolders();
+    </script>
+
+    <footer style="text-align: center; padding: 30px 0; margin-top: 50px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
+        <p>© 2026. @heo_11_u All rights reserved.</p>
+    </footer>
 </body>
 </html>

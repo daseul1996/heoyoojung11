@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>NO.11 HEOYOOJUNG - GALLERY</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc; 
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1d4ed8; 
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px; 
+        }
+
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: #1d4ed8;
+            background-color: #eff6ff; 
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            color: #1d4ed8;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-block;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            transition: color 0.2s;
+        }
+        .back-btn:hover {
+            color: #1d4ed8;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0 0 10px 0;
+        }
+        header p {
+            color: #64748b; 
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        /* 🖼️ 인스타그램 스타일 정사각형 그리드 레이아웃 */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 1 / 1; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 20px -3px rgba(29, 78, 216, 0.08);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+        }
+
+        /* 🔍 클릭했을 때 뜨는 원본 팝업(모달) 스타일 */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); 
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
+            <div class="nav-menu">
+                <a href="gallery.html" class="nav-item active">📸 사진</a>
+                <a href="calendar.html" class="nav-item">📅 일정</a>
+                <a href="news.html" class="nav-item">📰 NEWS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <header>
+            <a href="gallery.html" class="back-btn">← 갤러리 목록으로 돌아가기</a>
+            <h1 id="page-title">📁 갤러리 상세</h1>
+            <p>사진을 누르면 원본 화질로 팝업이 뜹니다!</p>
+        </header>
+
+        <!-- ⚡ 선택한 날짜의 사진들이 쫙 펼쳐질 공간 -->
+        <div class="photo-grid" id="photo-container">
+            <!-- 자바스크립트가 사진을 채워줍니다 -->
+        </div>
+    </div>
+
+    <!-- 원본 사진 팝업 창 -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImage" src="" alt="원본 사진">
+    </div>
+
+    <script>
+        const galleryCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxFXkleqA7GG8IOa3iBgrcrPxCTx_IexKTjuDHcnLUIiwSWfsAbFyFnqWRXwJbFVPPm_1Unj2RsuEW/pub?output=csv";
+
+        // 주소창에서 날짜(예: ?date=26.04.01) 읽어오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedDate = urlParams.get('date');
+
+        if (selectedDate) {
+            document.getElementById('page-title').innerText = `📁 ${selectedDate} 갤러리`;
+        }
+
+        async function loadDetailPhotos() {
+            try {
+                const response = await fetch(galleryCsvUrl);
+                const data = await response.text();
+                
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('photo-container');
+                container.innerHTML = ""; 
+
+                rows.forEach(row => {
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    if(cols.length >= 2) {
+                        const folderDate = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
+                        const fileName = cols[1] ? cols[1].trim().replace(/"/g, '') : "";
+
+                        // 주소창의 날짜와 시트에 적힌 날짜가 일치할 때만 사진 추가!
+                        if(folderDate === selectedDate && fileName) {
+                            const imgSrc = `${folderDate}/${fileName}.png`;
+                            const cardHtml = `
+                            <div class="photo-card" onclick="openModal('${imgSrc}')">
+                                <img src="${imgSrc}" alt="사진" loading="lazy" onerror="this.src='${folderDate}/${fileName}.jpg'">
+                            </div>
+                            `;
+                            container.innerHTML += cardHtml;
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("사진을 불러오는 데 실패했습니다.", error);
+            }
+        }
+
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'flex';
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        loadDetailPhotos();
+    </script>
+</body>
+</html>
