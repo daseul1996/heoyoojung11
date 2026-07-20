@@ -203,53 +203,70 @@
         </header>
 
         <div class="news-list" id="news-container">
-            <!-- 자바스크립트가 여기에 기사를 만들어줄 거예요 -->
+            <!-- ⚡ 빛의 속도로 뉴스가 채워집니다! -->
         </div>
     </div>
 
     <script>
         const newsCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRu2649eW-69sWreq0p4Xp4S5nor31l2iHcS-pABkTchn5IFoijM9XsNb4W5PW5N2e2LWcaVgDwfSvq/pub?output=csv";
 
+        // 화면에 HTML을 그려주는 함수
+        function renderNews(dataText) {
+            const rows = dataText.split('\n').slice(1);
+            const container = document.getElementById('news-container');
+            container.innerHTML = ""; 
+
+            rows.forEach(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                
+                if(cols.length >= 5) {
+                    const date = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
+                    const title = cols[1] ? cols[1].trim().replace(/"/g, '') : "";
+                    const summary = cols[2] ? cols[2].trim().replace(/"/g, '') : "";
+                    const link = cols[3] ? cols[3].trim().replace(/"/g, '') : "#";
+                    const image = cols[4] ? cols[4].trim().replace(/"/g, '') : "NEWS/news1.jpg";
+
+                    if(title) { 
+                        const cardHtml = `
+                        <a href="${link}" target="_blank" class="news-card">
+                            <div class="news-thumbnail">
+                                <img src="${image}" alt="뉴스 이미지">
+                            </div>
+                            <div class="news-content">
+                                <div class="news-date">${date}</div>
+                                <h2 class="news-title">${title}</h2>
+                                <p class="news-summary">${summary}</p>
+                            </div>
+                        </a>
+                        `;
+                        container.innerHTML += cardHtml; 
+                    }
+                }
+            });
+        }
+
         async function loadNews() {
             try {
+                // 1. 브라우저 저장소(캐시)에 이미 저장된 데이터가 있는지 먼저 확인합니다. (0.1초 컷!)
+                const cachedData = localStorage.getItem('cachedNewsData');
+                if (cachedData) {
+                    renderNews(cachedData); // 저장된 게 있으면 일단 눈 깜짝할 사이에 먼저 띄워줌!
+                }
+
+                // 2. 뒤에서는 최신 내용을 구글 시트에서 몰래 새로고침 해옵니다.
                 const response = await fetch(newsCsvUrl);
-                const data = await response.text();
+                const freshData = await response.text();
                 
-                const rows = data.split('\n').slice(1);
-                const container = document.getElementById('news-container');
-                container.innerHTML = ""; 
-
-                rows.forEach(row => {
-                    // 쉼표로 나누되, 따옴표 안에 있는 쉼표는 무시하도록 안전하게 처리
-                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-                    
-                    if(cols.length >= 5) {
-                        const date = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
-                        const title = cols[1] ? cols[1].trim().replace(/"/g, '') : "";
-                        const summary = cols[2] ? cols[2].trim().replace(/"/g, '') : "";
-                        const link = cols[3] ? cols[3].trim().replace(/"/g, '') : "#";
-                        const image = cols[4] ? cols[4].trim().replace(/"/g, '') : "NEWS/news1.jpg";
-
-                        if(title) { 
-                            const cardHtml = `
-                            <a href="${link}" target="_blank" class="news-card">
-                                <div class="news-thumbnail">
-                                    <img src="${image}" alt="뉴스 이미지">
-                                </div>
-                                <div class="news-content">
-                                    <div class="news-date">${date}</div>
-                                    <h2 class="news-title">${title}</h2>
-                                    <p class="news-summary">${summary}</p>
-                                </div>
-                            </a>
-                            `;
-                            container.innerHTML += cardHtml; 
-                        }
-                    }
-                });
+                // 새로운 내용이 기존과 다르면 브라우저 저장소를 업데이트하고 화면도 갱신!
+                if (freshData && freshData !== cachedData) {
+                    localStorage.setItem('cachedNewsData', freshData);
+                    renderNews(freshData);
+                }
             } catch (error) {
                 console.error("뉴스를 불러오는 데 실패했습니다.", error);
-                document.getElementById('news-container').innerHTML = "<p style='text-align:center; color:#64748b;'>뉴스를 불러오는 중 오류가 발생했습니다.</p>";
+                if (!document.getElementById('news-container').innerHTML) {
+                    document.getElementById('news-container').innerHTML = "<p style='text-align:center; color:#64748b;'>뉴스를 불러오는 중 오류가 발생했습니다.</p>";
+                }
             }
         }
 
