@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>HEOYOOJUNG</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 인트로 화면에서는 스크롤이 생기지 않도록 고정 */
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* 화면 전체를 채우는 배경 이미지 섹션 */
+        .intro-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.55)), url('26.04.06/photo.png.png'); /* 대문 사진 */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .intro-title {
+            font-size: 4.5rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .intro-subtitle {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            color: #f1f5f9;
+        }
+
+        /* 갤러리 입장 버튼 */
+        .intro-btn {
+            background-color: #1d4ed8; /* 구단 포인트 파란색 */
+            color: white;
+            text-decoration: none;
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 20px rgba(29, 78, 216, 0.4);
+        }
+
+        .intro-btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(29, 78, 216, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="intro-container">
+        <div class="intro-title">HEOYOOJUNG</div>
+        <div class="intro-subtitle">언제나 빛날 유정이의 모든 날을 응원해 💙</div>
+        <!-- 💡 버튼 텍스트가 세련된 EXPLORE GALLERY로 변경되었습니다! -->
+        <a href="gallery.html" class="intro-btn">EXPLORE GALLERY</a>
+    </div>
+
+</body>
+</html>

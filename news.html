@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>NO.11 HEOYOOJUNG - NEWS</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc; 
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+        /* 상단 메뉴 바 (일정 및 갤러리 페이지와 동일하게 통일) */
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1d4ed8; 
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px; 
+        }
+
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* 📰 뉴스 탭 활성화 */
+        .nav-item.active {
+            color: #1d4ed8;
+            background-color: #eff6ff; 
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            color: #1d4ed8;
+        }
+
+        /* 메인 콘텐츠 영역 */
+        .main-container {
+            max-width: 1000px; /* 뉴스 목록은 살짝 좁게 모아주는 것이 훨씬 정돈되어 보여요 */
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+        header p {
+            color: #64748b; 
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        /* 뉴스 목록 레이아웃 */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* 기사 카드 사이의 여백 */
+        }
+
+        /* 🆕 뉴스 카드 (왼쪽: 사진 / 오른쪽: 텍스트 가로 정렬 설정) */
+        .news-card {
+            display: flex; /* 가로 배치 */
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px; /* 둥글고 세련된 모서리 */
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 24px -5px rgba(29, 78, 216, 0.06);
+        }
+
+        /* 🆕 기사 대표 썸네일 이미지 영역 */
+        .news-thumbnail {
+            width: 240px; /* 사진 가로 크기 고정 */
+            min-width: 240px;
+            height: 160px; /* 사진 세로 크기 고정 */
+            overflow: hidden;
+            background-color: #f1f5f9;
+        }
+
+        .news-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 사진 비율이 깨지지 않고 꽉 차게 채우기 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 마우스를 대면 사진이 살짝 커지는 줌인 효과 */
+        .news-card:hover .news-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        /* 기사 텍스트 컨텐츠 영역 */
+        .news-content {
+            padding: 24px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 세로 가운데 정렬 */
+            flex-grow: 1; /* 나머지 빈 곳 다 채우기 */
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: #1d4ed8; /* 날짜 파란색 포인트 */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            line-height: 1.4;
+            color: #0f172a;
+            margin: 0 0 12px 0;
+            /* 제목이 너무 길어지면 두 줄 후 말줄임표 처리 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-summary {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #64748b;
+            margin: 0;
+            /* 내용이 너무 길어지면 한 줄 후 말줄임표 처리 */
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* 모바일이나 창 크기가 작아질 때는 위아래 세로 배치로 자연스럽게 변환 */
+        @media (max-width: 640px) {
+            .news-card {
+                flex-direction: column;
+            }
+            .news-thumbnail {
+                width: 100%;
+                height: 200px;
+            }
+            .news-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 메뉴 바 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
+            <div class="nav-menu">
+                <a href="gallery.html" class="nav-item">📸 사진</a>
+                <a href="calendar.html" class="nav-item">📅 일정</a>
+                <a href="news.html" class="nav-item active">📰 NEWS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <header>
+            <h1>NEWS</h1>
+            <p>코트 위에서 가장 빛나는 유정의 소식들 📰</p>
+        </header>
+
+        <div class="news-list">
+            <div class="news-list">
+         
+             <!-- 🎯 여기에 새로운 3번째 기사 코드를 붙여넣으세요! -->
+
+         <!-- 1번 뉴스 기사 ... -->
+        <a href="https://m.sports.naver.com..." ...>
+
+            <!-- 1번 뉴스 기사 (실제 링크를 연결하고 싶다면 href="#" 부분에 링크 주소를 넣으세요!) -->
+            <a href="https://m.sports.naver.com/basketball/article/065/0000298820" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news1.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 06. 17</div>
+                    <h2 class="news-title">야간 훈련장 지킨 ‘3순위 유망주’ 허유정, 멈추지 않은 이유… “언젠가는 기회가 올 거라고 믿는다”</h2>
+                    <p class="news-summary">“열심히 하다 보면 언젠가는 기회가 올 거라고 생각하고 있다.” 자세한 내용은 확인해 보세요. (클릭 시 기사 원문으로 이동 가능)</p>
+                </div>
+            </a>
+
+            <!-- 2번 뉴스 기사 (실제 링크를 연결하고 싶다면 href="#" 부분에 링크 주소를 넣으세요!) -->
+            <a href="https://m.sports.naver.com/basketball/article/065/0000298821" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news2.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 06. 17</div>
+                    <h2 class="news-title">배드민턴 구멍부터 7080 노래의 주인공은? 신한은행 양평 워크숍에서 있었던 일</h2>
+                    <p class="news-summary">인천 신한은행은 지난 11일부터 12일까지 경기도 양평에서 선수단 워크숍을 진행했다. 새 시즌을 앞두고 팀워크를 다지고, 새롭게 합류한 선수들과 호흡을 맞추기 위한 자리였다.</p>
+                </div>
+            </a>
+
+            <!-- 3번 뉴스 기사 -->
+            <a href="http://www.rookie.co.kr/news/articleView.html?idxno=124781" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news3.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 07. 13</div>
+                    <h2 class="news-title">'송윤하·김정은·최예슬·허유정 소집' AG 앞둔 전병준호..."원팀과 몸싸움 강조, 그게 안 되면 AG 메달도 없다"</h2>
+                    <p class="news-summary">전병준 감독이 이끄는 대한민국 여자 3x3 대표팀(이하 대표팀)이 13일 진천선수촌으로 소집됐다. 오는 9월 개최되는 2026 아이치·나고야 아시안게임에 대비해 소집된 대표팀은 2개월여의 준비 과정을 거쳐 아시안게임 메달에 도전한다. 
+
+출처 : ROOKIE(http://www.rookie.co.kr)</p>
+                </div>
+            </a>
+
+            <!-- 4번 뉴스 기사 (실제 링크를 연결하고 싶다면 href="#" 부분에 링크 주소를 넣으세요!) -->
+            <a href="https://www.rookie.co.kr/news/articleView.html?idxno=124966" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news4.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 07. 19</div>
+                    <h2 class="news-title">[W트리플잼] 아쉬운 패배에 눈물 보인 허유정 “AG 좋은 성적으로 보답하고 싶다”</h2>
+                    <p class="news-summary">허유정이 아시안게임을 향해 구슬땀을 흘리고 있다. 
+
+출처 : ROOKIE(http://www.rookie.co.kr)</p>
+                </div>
+            </a>
+
+            <!-- 5번 뉴스 기사 (실제 링크를 연결하고 싶다면 href="#" 부분에 링크 주소를 넣으세요!) -->
+            <a href="https://m.sports.naver.com/basketball/article/065/0000299812" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news5.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 07. 19</div>
+                    <h2 class="news-title">[26트리플잼] ‘송윤하·허유정·최예슬·김정은’ AG 정조준…“우리만의 분위기와 템포 유지해야”</h2>
+                    <p class="news-summary">“가장 중요한 건 우리만의 분위기와 리듬, 템포를 유지하는 것이다. 선수들에게도 너무 경직되지 말고 경기를 즐기면서 하자고 이야기한다.”</p>
+                </div>
+            </a>
+
+            <!-- 6번 뉴스 기사 (실제 링크를 연결하고 싶다면 href="#" 부분에 링크 주소를 넣으세요!) -->
+            <a href="https://basketkorea.com/news/newsview.php?ncode=1065605057020599" target="_blank" class="news-card">
+                <!-- 왼쪽에 들어갈 이미지 영역 -->
+                <div class="news-thumbnail">
+                    <img src="NEWS/news6.jpg" alt="뉴스 이미지">
+                </div>
+                <!-- 오른쪽에 들어갈 텍스트 영역 -->
+                <div class="news-content">
+                    <div class="news-date">2026. 07. 19</div>
+                    <h2 class="news-title">[트리플잼] 고른 활약 앞세운 팀 코리아, 라이온 시티 꺾고 3위로 마무리</h2>
+                    <p class="news-summary">팀 코리아는 19일 용인 롯데몰 수지점 1층 센터홀에서 열린 2026 BNK 금융 WKBL 3x3 트리플잼 대회 2일 차 3·4위전 경기에서 라이온 시티를 16–13으로 꺾었다.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
