@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>NO.11 HEOYOOJUNG - PROFILE</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8fafc; 
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1d4ed8; 
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px; 
+        }
+
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .nav-item.active {
+            color: #1d4ed8;
+            background-color: #eff6ff; 
+            font-weight: bold;
+        }
+
+        .nav-item:hover {
+            color: #1d4ed8;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #64748b; 
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        /* 프로필 카드 스타일 */
+        .profile-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+
+        .profile-img-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #eff6ff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            background-color: #f1f5f9;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0 0 5px 0;
+        }
+
+        .profile-subtitle {
+            font-size: 1.05rem;
+            color: #1d4ed8;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        /* 정보 테이블 스타일 */
+        .info-table {
+            width: 100%;
+            max-width: 500px;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .info-table th, .info-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+
+        .info-table th {
+            text-align: left;
+            color: #64748b;
+            width: 35%;
+            font-weight: 500;
+        }
+
+        .info-table td {
+            text-align: right;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        /* 소셜 링크 버튼 스타일 */
+        .social-links {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .social-btn:hover {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 네비게이션 바 (PROFILE 메뉴 추가 완료) -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
+            <div class="nav-menu">
+                <a href="profile.html" class="nav-item active">👤 프로필</a>
+                <a href="gallery.html" class="nav-item">📸 사진</a>
+                <a href="calendar.html" class="nav-item">📅 일정</a>
+                <a href="news.html" class="nav-item">📰 NEWS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <header>
+            <h1>PROFILE</h1>
+            <p>빛나는 선수 허유정의 기록 공간 ✨</p>
+        </header>
+
+        <!-- 프로필 카드 본문 -->
+        <div class="profile-card">
+            <!-- 프로필 사진 (프로필 폴더나 메인 폴더에 사진 넣어두고 경로 지정하시면 됩니다!) -->
+            <div class="profile-img-container">
+                <img src="26.07.18/photo1.png" alt="허유정 프로필 사진" loading="lazy">
+            </div>
+
+            <h2 class="profile-name">허유정</h2>
+            <p class="profile-subtitle">HEO YOO JUNG</p>
+
+            <!-- 상세 정보 테이블 -->
+            <table class="info-table">
+                <tr>
+                    <th>등번호</th>
+                    <td>No. 11</td>
+                </tr>
+                <tr>
+                    <th>소속</th>
+                    <td>신한은행 에스버드 여자 농구단 </td>
+                </tr>
+                <tr>
+                    <th>포지션</th>
+                    <td>Guard</td>
+                </tr>
+
+                </tr>
+            </table>
+
+            <!-- 관련 소셜 링크 버튼들 (원하시는 주소로 수정 가능!) -->
+            <div class="social-links">
+                <a href="https://www.instagram.com/heoyoojung_?igsh=MWxzd2UxdmR4dzYzbQ==" target="_blank" class="social-btn">
+                    📷 선수 공식 인스타그램 바로가기
+                </a>
+                <a href="https://www.WKBL.or.kr" target="_blank" class="social-btn">
+                    🏀 WKBL 공식 선수 페이지
+                </a>
+                <a href="https://www.youtube.com/@shsbird" target="_blank" class="social-btn">
+                    ▶ 관련 영상 / 신한은행 유튜브 채널
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 30px 0; margin-top: 50px; color: #666; font-size: 14px; border-top: 1px solid #eee;">
+        <p>© 2026. @heo_11_u All rights reserved.</p>
+    </footer>
+</body>
+</html>
