@@ -284,83 +284,45 @@
     </div>
 
     <script>
-        const schedules = {
-            "2026-07-18": { 
-                text: "📅 트리플잼", 
-                location: "📍 롯데몰 용인수지점", 
-                type: "korea" 
-            },
-            "2026-07-19": { 
-                text: "📅 트리플잼", 
-                location: "📍 롯데몰 용인수지점", 
-                type: "korea" 
-            },
-            "2026-07-30": { 
-                text: "📅 퓨처스리그", 
-                time: "⏰ 14:00",
-                match: "🏀 vs베트남국대",
-                location: "📍 부천실내체육관", 
-                type: "shinhan" 
-            },
-            "2026-07-31": { 
-                text: "📅 퓨처스리그", 
-                time: "⏰ 16:30",
-                match: "🏀 vs우리은행",
-                location: "📍 부천실내체육관", 
-                type: "shinhan" 
-            },
-            "2026-08-01": { 
-                text: "📅 퓨처스리그", 
-                time: "⏰ 19:00",
-                match: "🏀 vs국민은행",
-                location: "📍 부천실내체육관", 
-                type: "shinhan" 
-            },
-            "2026-08-03": { 
-                text: "📅 퓨처스리그", 
-                time: "⏰ 14:00",
-                match: "🏀 vs일본대학선발",
-                location: "📍 부천실내체육관", 
-                type: "shinhan" 
-            },
-            "2026-08-10": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-11": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-12": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-13": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-14": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-15": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            },
-            "2026-08-16": { 
-                text: "📅 네이션리그", 
-                location: "📍 중국 창저우", 
-                type: "korea" 
-            }
-        };
+        // 👇 유정 님이 주신 구글 시트 링크가 여기에 들어갔어요! 👇
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiCVieOnEzAz8e_t_U11bvdotDJvrTt6KruXBu1yciaF7hMtiW9H9ag3l-W21ptvdZgcP-97hfI1IS/pub?output=csv";
 
+        let schedules = {}; // 빈 스케줄 주머니
         let currentDate = new Date();
+
+        // 구글 시트에서 데이터 가져오는 마법!
+        async function loadSchedules() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                
+                // 엑셀 내용을 줄바꿈으로 쪼개기 (첫 줄 제목은 빼고)
+                const rows = data.split('\n').slice(1);
+                
+                rows.forEach(row => {
+                    // 내용을 쉼표(,) 기준으로 쪼개기
+                    const cols = row.split(',');
+                    if(cols.length >= 6) {
+                        const date = cols[0].trim();
+                        if(date) { // 날짜가 있으면 주머니에 쏙!
+                            schedules[date] = {
+                                type: cols[1] ? cols[1].trim() : "",
+                                text: cols[2] ? cols[2].trim() : "",
+                                time: cols[3] ? cols[3].trim() : "",
+                                match: cols[4] ? cols[4].trim() : "",
+                                location: cols[5] ? cols[5].trim() : ""
+                            };
+                        }
+                    }
+                });
+                
+                // 데이터 다 가져왔으면 달력 그리기!
+                renderCalendar();
+            } catch (error) {
+                console.error("일정을 불러오는 데 실패했습니다.", error);
+                renderCalendar(); // 실패해도 일단 빈 달력은 보여주기
+            }
+        }
 
         function renderCalendar() {
             const year = currentDate.getFullYear();
@@ -400,7 +362,7 @@
                     let item = schedules[dateKey];
                     
                     let boxHtml = `<div class="event-box ${item.type}">`;
-                    boxHtml += `<div><b>${item.text}</b></div>`;
+                    if (item.text) boxHtml += `<div><b>${item.text}</b></div>`;
                     if (item.time) boxHtml += `<div>${item.time}</div>`;
                     if (item.match) boxHtml += `<div>${item.match}</div>`;
                     if (item.location) boxHtml += `<div>${item.location}</div>`;
@@ -435,9 +397,6 @@
             renderCalendar();
         }
 
-        // 달력을 그리는 명령
-        renderCalendar();
-
         // 💡 버튼을 눌렀을 때 일정을 걸러주는 마법 기능!
         function filterSchedule(type) {
             let items = document.querySelectorAll('.event-box'); 
@@ -452,6 +411,9 @@
                 }
             });
         }
+
+        // 시작할 때 구글 시트에서 데이터 가져오기 실행!
+        loadSchedules();
     </script>
 
     <!-- 달력 페이지에 맞춘 예쁜 저작권 푸터 -->
