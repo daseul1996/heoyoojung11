@@ -169,7 +169,7 @@
 </head>
 <body>
 
-    <!-- 상단 메뉴 바 (PHOTO 폴더 안이라서 경로에 ../ 추가) -->
+    <!-- 상단 메뉴 바 (메인으로 나가야 하므로 여기는 ../ 유지) -->
     <nav class="navbar">
         <div class="navbar-container">
             <a href="../index.html" class="nav-logo">HEOYOOJUNG.kr</a>
@@ -183,30 +183,30 @@
 
     <div class="main-container">
         <header>
-            <!-- 뒤로 가기 버튼 경로 수정 -->
+            <!-- 뒤로 가기 버튼도 밖으로 나가야 하므로 ../ 유지 -->
             <a href="../gallery.html" class="back-btn">← 갤러리 목록으로 돌아가기</a>
             <h1>📁 26.04.01 📸</h1>
             <p>사진을 누르면 원본 화질로 팝업이 뜹니다!</p>
         </header>
 
-        <!-- 사진 경로 앞에 상위로 나가는 ../ 추가 -->
+        <!-- 사진 경로에서 ../ 제거 완료 (PHOTO 폴더 안이므로 바로 폴더명부터 시작) -->
         <div class="photo-grid">
-            <div class="photo-card" onclick="openModal('../26.04.01/photo1.png')"><img src="../26.04.01/photo1.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo2.png')"><img src="../26.04.01/photo2.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo3.png')"><img src="../26.04.01/photo3.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo4.png')"><img src="../26.04.01/photo4.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo5.png')"><img src="../26.04.01/photo5.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo6.png')"><img src="../26.04.01/photo6.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo7.png')"><img src="../26.04.01/photo7.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo8.png')"><img src="../26.04.01/photo8.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo9.png')"><img src="../26.04.01/photo9.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo10.png')"><img src="../26.04.01/photo10.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo11.png')"><img src="../26.04.01/photo11.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo12.png')"><img src="../26.04.01/photo12.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo13.png')"><img src="../26.04.01/photo13.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo14.png')"><img src="../26.04.01/photo14.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo15.png')"><img src="../26.04.01/photo15.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal('../26.04.01/photo16.png')"><img src="../26.04.01/photo16.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo1.png')"><img src="26.04.01/photo1.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo2.png')"><img src="26.04.01/photo2.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo3.png')"><img src="26.04.01/photo3.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo4.png')"><img src="26.04.01/photo4.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo5.png')"><img src="26.04.01/photo5.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo6.png')"><img src="26.04.01/photo6.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo7.png')"><img src="26.04.01/photo7.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo8.png')"><img src="26.04.01/photo8.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo9.png')"><img src="26.04.01/photo9.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo10.png')"><img src="26.04.01/photo10.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo11.png')"><img src="26.04.01/photo11.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo12.png')"><img src="26.04.01/photo12.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo13.png')"><img src="26.04.01/photo13.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo14.png')"><img src="26.04.01/photo14.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo15.png')"><img src="26.04.01/photo15.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal('26.04.01/photo16.png')"><img src="26.04.01/photo16.png" alt="사진" loading="lazy"></div>
         </div>
     </div>
 
