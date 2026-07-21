@@ -132,7 +132,7 @@
             display: block;
         }
 
-        /* 🔍 기존 스타일을 유지한 팝업(모달) 스타일 + 슬라이드 버튼 */
+        /* 🔍 팝업(모달) 스타일 */
         .modal {
             display: none; 
             position: fixed;
@@ -146,6 +146,7 @@
             align-items: center;
             padding: 20px;
             box-sizing: border-box;
+            touch-action: pan-y;
         }
 
         .modal-content-wrapper {
@@ -163,6 +164,8 @@
             border-radius: 8px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none; /* 컴퓨터 마우스로 끌어도 겹치지 않게 방지 */
         }
 
         .modal-close {
@@ -213,6 +216,12 @@
             background: rgba(0, 0, 0, 0.6);
             padding: 4px 12px;
             border-radius: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-nav {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -328,6 +337,31 @@
                 }
             }
         });
+
+        // 스마트폰 터치(스와이프) 기능 구현
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const modalElement = document.getElementById('imageModal');
+
+        modalElement.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+        }, false);
+
+        modalElement.addEventListener('touchend', function(event) {
+            touchEndX = event.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const swipeThreshold = 50; 
+            if (touchEndX < touchStartX - swipeThreshold) {
+                changeSlide(1);
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                changeSlide(-1);
+            }
+        }
 
         // 배경 클릭시 닫기
         document.getElementById('imageModal').addEventListener('click', function(event) {
