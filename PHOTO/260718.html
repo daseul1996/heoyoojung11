@@ -132,7 +132,7 @@
             display: block;
         }
 
-        /* 🔍 슬라이드 기능이 포함된 팝업(모달) 스타일 */
+        /* 🔍 트렌디하게 바뀐 모달 팝업 스타일 */
         .modal {
             display: none; 
             position: fixed;
@@ -141,7 +141,8 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); 
+            background-color: rgba(10, 10, 15, 0.92); 
+            backdrop-filter: blur(8px); /* 배경을 은은하게 블러처리 (고급스러운 느낌) */
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -160,59 +161,83 @@
         .modal img {
             max-width: 100%;
             max-height: 85vh;
-            border-radius: 8px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             object-fit: contain;
         }
 
+        /* ❌ 세련된 닫기 버튼 */
         .modal-close {
             position: absolute;
-            top: 30px;
-            right: 40px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
+            top: 25px;
+            right: 35px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 32px;
+            font-weight: 300;
             cursor: pointer;
             z-index: 1010;
+            transition: color 0.2s, transform 0.2s;
+            background: rgba(255, 255, 255, 0.08);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ◀ ▶ 넘기기 버튼 스타일 */
+        .modal-close:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* ◀ ▶ 세련된 미니멀 화살표 버튼 */
         .modal-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            font-size: 30px;
-            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 22px;
+            width: 52px;
+            height: 52px;
             cursor: pointer;
             border-radius: 50%;
-            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
             z-index: 1010;
         }
 
         .modal-nav:hover {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            transform: translateY(-50%) scale(1.08);
         }
 
         .modal-prev {
-            left: 30px;
+            left: 20px;
         }
 
         .modal-next {
-            right: 30px;
+            right: 20px;
         }
 
-        /* 사진 번호 표시 (예: 1 / 33) */
+        /* 사진 번호 카운터 (모던한 알약 캡슐 스타일) */
         .modal-counter {
             position: absolute;
-            bottom: 20px;
-            color: white;
-            font-size: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 12px;
+            bottom: -40px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 16px;
             border-radius: 20px;
+            backdrop-filter: blur(4px);
         }
     </style>
 </head>
@@ -236,7 +261,7 @@
             <p>사진을 누르거나 키보드 방향키(←, →)로 편하게 넘겨보세요!</p>
         </header>
 
-        <!-- 사진 리스트 (인덱스 번호 0부터 순서대로 자동 인식) -->
+        <!-- 사진 리스트 -->
         <div class="photo-grid" id="photoGrid">
             <div class="photo-card" onclick="openModal(0)"><img src="26.07.18/photo1.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(1)"><img src="26.07.18/photo2.png" alt="사진" loading="lazy"></div>
@@ -266,7 +291,7 @@
             <div class="photo-card" onclick="openModal(25)"><img src="26.07.18/photo26.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(26)"><img src="26.07.18/photo27.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(27)"><img src="26.07.18/photo28.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(28)"><img src="26.07.18/photo29.png" alt="photo" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(28)"><img src="26.07.18/photo29.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(29)"><img src="26.07.18/photo30.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(30)"><img src="26.07.18/photo31.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(31)"><img src="26.07.18/photo32.png" alt="사진" loading="lazy"></div>
@@ -274,7 +299,7 @@
         </div>
     </div>
 
-    <!-- 🔍 슬라이드형 팝업 창 구조 -->
+    <!-- 🔍 모던하게 바뀐 팝업 창 -->
     <div id="imageModal" class="modal">
         <span class="modal-close" onclick="closeModal()">&times;</span>
         <button class="modal-nav modal-prev" onclick="changeSlide(-1)">&#10094;</button>
@@ -286,7 +311,6 @@
     </div>
 
     <script>
-        // 페이지 안의 모든 이미지 경로를 자동으로 수집합니다
         const images = [];
         document.querySelectorAll('.photo-grid img').forEach(img => {
             images.push(img.src);
@@ -308,9 +332,9 @@
         function changeSlide(direction) {
             currentIndex += direction;
             if (currentIndex < 0) {
-                currentIndex = images.length - 1; // 첫 장에서 앞으로 가면 맨 끝으로
+                currentIndex = images.length - 1;
             } else if (currentIndex >= images.length) {
-                currentIndex = 0; // 맨 끝에서 뒤로 가면 첫 장으로
+                currentIndex = 0;
             }
             updateModalContent();
         }
@@ -322,7 +346,6 @@
             modalCounter.innerText = `${currentIndex + 1} / ${images.length}`;
         }
 
-        // 키보드 좌우 방향키로 넘기기 + ESC로 닫기 기능 추가
         document.addEventListener('keydown', function(event) {
             const modal = document.getElementById('imageModal');
             if (modal.style.display === 'flex') {
@@ -336,7 +359,6 @@
             }
         });
 
-        // 배경(어두운 곳)을 클릭해도 닫히도록 설정
         document.getElementById('imageModal').addEventListener('click', function(event) {
             if (event.target === this) {
                 closeModal();
