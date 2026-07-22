@@ -165,7 +165,7 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
             object-fit: contain;
             user-select: none;
-            -webkit-user-drag: none; /* 컴퓨터 마우스로 이미지를 잡고 끌어도 드래그 안 되게 원천 차단! */
+            -webkit-user-drag: none; /* 컴퓨터 마우스 드래그 겹침 방지 */
         }
 
         .modal-close {
@@ -179,6 +179,7 @@
             z-index: 1010;
         }
 
+        /* ◀ ▶ 화살표 버튼 */
         .modal-nav {
             position: absolute;
             top: 50%;
@@ -206,6 +207,7 @@
             right: 30px;
         }
 
+        /* 사진 번호 카운터 */
         .modal-counter {
             position: absolute;
             bottom: -35px;
@@ -239,11 +241,11 @@
     <div class="main-container">
         <header>
             <a href="../gallery.html" class="back-btn">← 갤러리 목록으로 돌아가기</a>
-            <h1>📁 26.07.18 트리플잼 1일차 </h1>
+            <h1>📁 26.07.18 📸</h1>
             <p>사진을 누른 후 키보드 방향키(←, →)로 편하게 넘겨보세요!</p>
         </header>
 
-        <!-- 사진 리스트 -->
+        <!-- 사진 리스트 (61장 자동 세팅) -->
         <div class="photo-grid" id="photoGrid">
             <div class="photo-card" onclick="openModal(0)"><img src="26.07.18/photo1.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(1)"><img src="26.07.18/photo2.png" alt="사진" loading="lazy"></div>
@@ -278,6 +280,34 @@
             <div class="photo-card" onclick="openModal(30)"><img src="26.07.18/photo31.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(31)"><img src="26.07.18/photo32.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(32)"><img src="26.07.18/photo33.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(33)"><img src="26.07.18/photo34.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(34)"><img src="26.07.18/photo35.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(35)"><img src="26.07.18/photo36.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(36)"><img src="26.07.18/photo37.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(37)"><img src="26.07.18/photo38.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(38)"><img src="26.07.18/photo39.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(39)"><img src="26.07.18/photo40.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(40)"><img src="26.07.18/photo41.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(41)"><img src="26.07.18/photo42.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(42)"><img src="26.07.18/photo43.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(43)"><img src="26.07.18/photo44.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(44)"><img src="26.07.18/photo45.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(45)"><img src="26.07.18/photo46.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(46)"><img src="26.07.18/photo47.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(47)"><img src="26.07.18/photo48.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(48)"><img src="26.07.18/photo49.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(49)"><img src="26.07.18/photo50.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(50)"><img src="26.07.18/photo51.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(51)"><img src="26.07.18/photo52.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(52)"><img src="26.07.18/photo53.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(53)"><img src="26.07.18/photo54.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(54)"><img src="26.07.18/photo55.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(55)"><img src="26.07.18/photo56.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(56)"><img src="26.07.18/photo57.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(57)"><img src="26.07.18/photo58.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(58)"><img src="26.07.18/photo59.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(59)"><img src="26.07.18/photo60.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(60)"><img src="26.07.18/photo61.png" alt="사진" loading="lazy"></div>
         </div>
     </div>
 
@@ -287,7 +317,7 @@
         <button class="modal-nav modal-prev" onclick="changeSlide(-1)">&#10094;</button>
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <img id="modalImage" src="" alt="원본 사진">
-            <div id="modalCounter" class="modal-counter">1 / 33</div>
+            <div id="modalCounter" class="modal-counter">1 / 61</div>
         </div>
         <button class="modal-nav modal-next" onclick="changeSlide(1)">&#10095;</button>
     </div>
