@@ -112,6 +112,7 @@
             border-color: #bfdbfe;
         }
 
+        /* 스마트폰/모니터 16:9 비율 유지 */
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 비율 */
@@ -180,34 +181,53 @@
 
     <div class="main-container">
         <header>
-            <h1>MEDIA & YOUTUBE 🎬</h1>
+            <h1>MEDIA 🎬</h1>
             <p>관련 영상 및 하이라이트를 한눈에 감상해 보세요.</p>
         </header>
 
-        <!-- 영상 카드들이 자동으로 생성되어 들어가는 공간 -->
+        <!-- videos.js에 추가한 영상들이 카드로 생성되는 위치 -->
         <div class="video-grid" id="videoGrid"></div>
     </div>
 
     <!-- 데이터 파일 불러오기 -->
     <script src="videos.js"></script>
     <script>
-        // 유튜브 URL에서 영상 ID(11자리) 추출 함수
-        function getYoutubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : url;
-        }
-
         const gridContainer = document.getElementById('videoGrid');
 
-        // videos.js 파일에 선언된 videoList 배열을 순회하며 카드 자동 생성
+        // 영상 URL 자동 분류 및 재생 주소 생성 함수
+        function getEmbedUrl(url) {
+            if (!url) return '';
+
+            // 1. 유튜브 링크 처리 (일반 링크, 공유 링크, 퍼가기 링크 모두 대응)
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                const match = url.match(regExp);
+                const videoId = (match && match[2].length === 11) ? match[2] : '';
+                return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+            } 
+            
+            // 2. 네이버 TV / 네이버 영상 링크 처리
+            if (url.includes('tv.naver.com')) {
+                // 일반 네이버 TV 영상 주소(tv.naver.com/v/XXXXX)일 경우 embed 주소로 자동 변환
+                if (url.includes('/v/') && !url.includes('/embed/')) {
+                    const videoId = url.split('/v/')[1].split('?')[0];
+                    return `https://tv.naver.com/embed/${videoId}`;
+                }
+            }
+
+            // 3. 이미 embed 주소이거나 기타 영상 링크인 경우 그대로 사용
+            return url;
+        }
+
+        // videos.js의 리스트를 읽어와 카드 그리기
         if (typeof videoList !== 'undefined' && videoList.length > 0) {
             videoList.forEach(item => {
-                const videoId = getYoutubeId(item.url);
+                const finalEmbedUrl = getEmbedUrl(item.url);
+
                 const cardHtml = `
                     <div class="video-card">
                         <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen loading="lazy"></iframe>
+                            <iframe src="${finalEmbedUrl}" allowfullscreen loading="lazy"></iframe>
                         </div>
                         <div class="video-info">
                             <span class="video-tag">${item.tag || '🎥 MEDIA'}</span>
