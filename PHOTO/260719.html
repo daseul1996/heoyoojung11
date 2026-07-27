@@ -246,7 +246,7 @@
             <p>사진을 누른 후 키보드 방향키(←, →)로 편하게 넘겨보세요!</p>
         </header>
 
-        <!-- 사진 리스트 (60장 자동 세팅) -->
+        <!-- 사진 리스트 (63장 세팅 완료) -->
         <div class="photo-grid" id="photoGrid">
             <div class="photo-card" onclick="openModal(0)"><img src="26.07.19/photo1.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(1)"><img src="26.07.19/photo2.png" alt="사진" loading="lazy"></div>
@@ -299,18 +299,20 @@
             <div class="photo-card" onclick="openModal(48)"><img src="26.07.19/photo49.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(49)"><img src="26.07.19/photo50.png" alt="사진" loading="lazy"></div>
             <div class="photo-card" onclick="openModal(50)"><img src="26.07.19/photo51.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(51)"><img src="26.07.19/photo52.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(52)"><img src="26.07.19/photo53.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(53)"><img src="26.07.19/photo54.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(54)"><img src="26.07.19/photo55.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(55)"><img src="26.07.19/photo56.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(56)"><img src="26.07.19/photo57.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(57)"><img src="26.07.19/photo58.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(58)"><img src="26.07.19/photo59.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(59)"><img src="26.07.19/photo60.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(59)"><img src="26.07.19/photo61.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(59)"><img src="26.07.19/photo62.png" alt="사진" loading="lazy"></div>
-            <div class="photo-card" onclick="openModal(59)"><img src="26.07.19/photo63.png" alt="사진" loading="lazy"></div>
+            
+            <!-- 25MB 초과 Backblaze 적용 이미지 (52~63번) -->
+            <div class="photo-card" onclick="openModal(51)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo52.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(52)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo53.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(53)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo54.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(54)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo55.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(55)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo56.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(56)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo57.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(57)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo58.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(58)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo59.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(59)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo60.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(60)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo61.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(61)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo62.png" alt="사진" loading="lazy"></div>
+            <div class="photo-card" onclick="openModal(62)"><img src="https://f005.backblazeb2.com/file/heoyoojung-photos/photo63.png" alt="사진" loading="lazy"></div>
         </div>
     </div>
 
@@ -320,7 +322,7 @@
         <button class="modal-nav modal-prev" onclick="changeSlide(-1)">&#10094;</button>
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <img id="modalImage" src="" alt="원본 사진">
-            <div id="modalCounter" class="modal-counter">1 / 60</div>
+            <div id="modalCounter" class="modal-counter">1 / 63</div>
         </div>
         <button class="modal-nav modal-next" onclick="changeSlide(1)">&#10095;</button>
     </div>
