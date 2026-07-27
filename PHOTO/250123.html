@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GALLERY - 25.01.23</title>
     <style>
         body {
@@ -71,7 +72,7 @@
         }
 
         header {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .back-btn {
@@ -97,6 +98,54 @@
             color: #64748b; 
             font-size: 1.05rem;
             margin: 0;
+        }
+
+        /* 💾 구글 드라이브 다운로드 버튼 스타일 */
+        .drive-banner {
+            background-color: #ffffff;
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 20px 25px;
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.05);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .drive-banner-text h3 {
+            margin: 0 0 4px 0;
+            font-size: 1.1rem;
+            color: #0f172a;
+        }
+
+        .drive-banner-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .drive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            background-color: #1d4ed8;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(29, 78, 216, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .drive-btn:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(29, 78, 216, 0.35);
         }
 
         /* 🖼️ 사진 그리드 레이아웃 */
@@ -222,6 +271,15 @@
             .modal-nav {
                 display: none;
             }
+            .drive-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .drive-btn {
+                width: 100%;
+                justify-content: center;
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
@@ -245,6 +303,17 @@
             <h1>📁 25.01.23 📸</h1>
             <p>사진을 누른 후 키보드 방향키(←, →)로 편하게 넘겨보세요!</p>
         </header>
+
+        <!-- 💾 구글 드라이브 고화질 원본 다운로드 안내 배너 -->
+        <div class="drive-banner">
+            <div class="drive-banner-text">
+                <h3>📸 고화질 원본 사진이 필요하신가요?</h3>
+                <p>구글 드라이브에서 25.01.23 현장의 원본 화질을 바로 다운로드하실 수 있습니다.</p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1fXb72pArp8pFF6BYp2oCND003L7KTvQ2?usp=drive_link" target="_blank" class="drive-btn">
+                💾 25.01.23 고화질 원본 전체 다운로드
+            </a>
+        </div>
 
         <!-- 사진 리스트 (15장 자동 세팅) -->
         <div class="photo-grid" id="photoGrid">
