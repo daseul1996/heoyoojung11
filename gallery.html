@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GALLERY - HEOYOOJUNG.kr</title>
     <style>
         body {
@@ -16,7 +15,7 @@
         .navbar {
             background-color: white;
             border-bottom: 1px solid #e2e8f0;
-            padding: 15px 20px;
+            padding: 15px 30px;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -29,8 +28,6 @@
             display: flex;
             justify-content: space-between; 
             align-items: center; 
-            flex-wrap: wrap; /* 모바일에서 넘치지 않게 줄바꿈 허용 */
-            gap: 10px;
         }
 
         .nav-logo {
@@ -42,21 +39,19 @@
 
         .nav-menu {
             display: flex;
-            gap: 8px; 
-            flex-wrap: wrap;
+            gap: 15px; 
         }
 
         .nav-item {
             color: #64748b;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 6px;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            white-space: nowrap;
         }
 
         .nav-item.active {
@@ -67,33 +62,6 @@
 
         .nav-item:hover {
             color: #1d4ed8;
-        }
-
-        /* 📱 모바일 화면 전용 스타일 보완 */
-        @media (max-width: 768px) {
-            .navbar-container {
-                justify-content: center; /* 로고와 메뉴 중앙 정렬 */
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .nav-menu {
-                justify-content: center;
-                gap: 4px;
-            }
-
-            .nav-item {
-                font-size: 0.82rem;
-                padding: 5px 8px;
-            }
-
-            .main-container {
-                padding: 30px 15px;
-            }
-
-            header h1 {
-                font-size: 1.8rem;
-            }
         }
 
         .main-container {
@@ -123,8 +91,8 @@
         .season-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 40px;
+            gap: 12px;
+            margin-bottom: 50px;
             flex-wrap: wrap;
         }
 
@@ -132,8 +100,8 @@
             background-color: white;
             color: #64748b;
             border: 1px solid #cbd5e1;
-            padding: 8px 18px;
-            font-size: 0.9rem;
+            padding: 10px 22px;
+            font-size: 0.95rem;
             font-weight: 600;
             border-radius: 30px;
             cursor: pointer;
@@ -156,8 +124,8 @@
         /* 🖼️ 날짜 카드 그리드 */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .gallery-card {
@@ -195,14 +163,14 @@
         }
 
         .card-body {
-            padding: 16px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .card-date {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #0f172a;
             margin: 0;
