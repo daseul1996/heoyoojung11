@@ -185,6 +185,7 @@
             border: 1px solid #f1f5f9;
             vertical-align: top;
             padding: 8px;
+            transition: background-color 0.2s;
         }
 
         .date-num {
@@ -192,9 +193,27 @@
             font-weight: 600;
             color: #334155;
             margin-bottom: 6px;
+            display: inline-block;
         }
         td.sun .date-num { color: #ef4444; } 
         td.sat .date-num { color: #3b82f6; } 
+
+        /* ✨ 오늘 날짜 깔끔한 스타일 추가 ✨ */
+        td.today-cell {
+            background-color: #f0f7ff; /* 은은한 블루 배경 */
+            border: 1px solid #bfdbfe;
+        }
+
+        td.today-cell .date-num {
+            background-color: #1d4ed8; /* 숫자에 원형 포인트 */
+            color: white !important;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
 
         /* 🟢 국대 일정 박스 */
         .event-box.korea {
@@ -234,13 +253,13 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="nav-logo">HEOYOOJUNG.kr</a>
-<div class="nav-menu">
-    <a href="profile.html" class="nav-item">👤 프로필</a>
-    <a href="gallery.html" class="nav-item">📸 사진</a>
-    <a href="calendar.html" class="nav-item active">📅 일정</a>
-    <a href="news.html" class="nav-item">📰 NEWS</a>
-    <a href="youtube.html" class="nav-item">🎬 MEDIA</a>
-</div>
+            <div class="nav-menu">
+                <a href="profile.html" class="nav-item">👤 프로필</a>
+                <a href="gallery.html" class="nav-item">📸 사진</a>
+                <a href="calendar.html" class="nav-item active">📅 일정</a>
+                <a href="news.html" class="nav-item">📰 NEWS</a>
+                <a href="youtube.html" class="nav-item">🎬 MEDIA</a>
+            </div>
         </div>
     </nav>
 
@@ -317,6 +336,12 @@
             const firstDay = new Date(year, month, 1).getDay();
             const lastDate = new Date(year, month + 1, 0).getDate();
 
+            // 오늘 날짜 정보 계산
+            const today = new Date();
+            const todayYear = today.getFullYear();
+            const todayMonth = today.getMonth();
+            const todayDate = today.getDate();
+
             let tbody = document.getElementById("calendar-body");
             tbody.innerHTML = "";
 
@@ -335,6 +360,11 @@
 
                 if (dayOfWeek === 0) cell.className = "sun";
                 if (dayOfWeek === 6) cell.className = "sat";
+
+                // 오늘 날짜인지 체크하여 클래스 부여
+                if (year === todayYear && month === todayMonth && i === todayDate) {
+                    cell.classList.add("today-cell");
+                }
 
                 let formattedMonth = String(month + 1).padStart(2, '0');
                 let formattedDay = String(i).padStart(2, '0');
@@ -377,14 +407,14 @@
 
         async function loadSchedules() {
             try {
-                // ⚡ 1. 브라우저에 저장된 데이터가 있으면 0.1초 만에 먼저 달력 그림!
+                // ⚡ 1. 브라우저에 저장된 데이터가 있으면 먼저 달력 그림!
                 const cachedData = localStorage.getItem('cachedCalendarData');
                 if (cachedData) {
                     parseAndStoreSchedules(cachedData);
                     renderCalendar();
                 }
 
-                // ⚡ 2. 뒤에서 최신 시트 내용을 몰래 가져와서 업데이트
+                // ⚡ 2. 최신 시트 내용을 가져와서 업데이트
                 const response = await fetch(calendarCsvUrl);
                 const freshData = await response.text();
                 
