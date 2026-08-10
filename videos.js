@@ -4,12 +4,12 @@ const videoList = [
         title: "'위기의 순간마다 대활약' MVP 허유정 인터뷰",
         desc: "2026 WKBL 퓨처스리그 허유정 인터뷰",
         url: "https://chzzk.naver.com/video/14510558"
-    }
+    },
     {
         tag: "🎥 신한은행 유튜브",
         title: "에스버드 더비 성사(?) | 3X3 트리플잼 비하인드 📁",
         desc: "유정 선수와 현정 선수가 출전한 3x3 트리플잼 현장을 에스버드TV가 담아왔습니다.📺",
-        url: "https://youtu.be/6W-8yj9lgmE?si=6puWvSYBfjc7P4vN" // 
+        url: "https://youtu.be/6W-8yj9lgmE?si=6puWvSYBfjc7P4vN"
     },
     {
         tag: "📺 네이버 티비",
