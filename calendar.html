@@ -198,14 +198,14 @@
         td.sun .date-num { color: #ef4444; } 
         td.sat .date-num { color: #3b82f6; } 
 
-        /* ✨ 오늘 날짜 깔끔한 스타일 추가 ✨ */
+        /* 오늘 날짜 깔끔한 스타일 */
         td.today-cell {
-            background-color: #f0f7ff; /* 은은한 블루 배경 */
+            background-color: #f0f7ff;
             border: 1px solid #bfdbfe;
         }
 
         td.today-cell .date-num {
-            background-color: #1d4ed8; /* 숫자에 원형 포인트 */
+            background-color: #1d4ed8;
             color: white !important;
             width: 24px;
             height: 24px;
@@ -315,13 +315,18 @@
                 if(cols.length >= 6) {
                     const date = cols[0] ? cols[0].trim().replace(/"/g, '') : "";
                     if(date) { 
-                        schedules[date] = {
+                        // 날짜별로 배열로 생성하여 여러 일정이 들어올 수 있게 변경!
+                        if (!schedules[date]) {
+                            schedules[date] = [];
+                        }
+
+                        schedules[date].push({
                             type: cols[1] ? cols[1].trim().replace(/"/g, '') : "",
                             text: cols[2] ? cols[2].trim().replace(/"/g, '') : "",
                             time: cols[3] ? cols[3].trim().replace(/"/g, '') : "",
                             match: cols[4] ? cols[4].trim().replace(/"/g, '') : "",
                             location: cols[5] ? cols[5].trim().replace(/"/g, '') : ""
-                        };
+                        });
                     }
                 }
             });
@@ -336,7 +341,6 @@
             const firstDay = new Date(year, month, 1).getDay();
             const lastDate = new Date(year, month + 1, 0).getDate();
 
-            // 오늘 날짜 정보 계산
             const today = new Date();
             const todayYear = today.getFullYear();
             const todayMonth = today.getMonth();
@@ -361,7 +365,6 @@
                 if (dayOfWeek === 0) cell.className = "sun";
                 if (dayOfWeek === 6) cell.className = "sat";
 
-                // 오늘 날짜인지 체크하여 클래스 부여
                 if (year === todayYear && month === todayMonth && i === todayDate) {
                     cell.classList.add("today-cell");
                 }
@@ -372,16 +375,18 @@
 
                 let cellContent = `<div class="date-num">${i}</div>`;
                 
-                if (schedules[dateKey]) {
-                    let item = schedules[dateKey];
-                    let boxHtml = `<div class="event-box ${item.type}">`;
-                    if (item.text) boxHtml += `<div><b>${item.text}</b></div>`;
-                    if (item.time) boxHtml += `<div>${item.time}</div>`;
-                    if (item.match) boxHtml += `<div>${item.match}</div>`;
-                    if (item.location) boxHtml += `<div>${item.location}</div>`;
-                    boxHtml += `</div>`;
+                // 해당 날짜의 일정을 순회하며 모두 출력
+                if (schedules[dateKey] && schedules[dateKey].length > 0) {
+                    schedules[dateKey].forEach(item => {
+                        let boxHtml = `<div class="event-box ${item.type}">`;
+                        if (item.text) boxHtml += `<div><b>${item.text}</b></div>`;
+                        if (item.time) boxHtml += `<div>${item.time}</div>`;
+                        if (item.match) boxHtml += `<div>${item.match}</div>`;
+                        if (item.location) boxHtml += `<div>${item.location}</div>`;
+                        boxHtml += `</div>`;
 
-                    cellContent += boxHtml;
+                        cellContent += boxHtml;
+                    });
                 }
 
                 cell.innerHTML = cellContent;
@@ -407,14 +412,12 @@
 
         async function loadSchedules() {
             try {
-                // ⚡ 1. 브라우저에 저장된 데이터가 있으면 먼저 달력 그림!
                 const cachedData = localStorage.getItem('cachedCalendarData');
                 if (cachedData) {
                     parseAndStoreSchedules(cachedData);
                     renderCalendar();
                 }
 
-                // ⚡ 2. 최신 시트 내용을 가져와서 업데이트
                 const response = await fetch(calendarCsvUrl);
                 const freshData = await response.text();
                 
